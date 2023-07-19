@@ -15,6 +15,9 @@
 package com.example.mapwithmarker;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -29,7 +33,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 // [START maps_marker_on_map_ready]
 public class MapsMarkerActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener{
 
     // [START_EXCLUDE]
     // [START maps_marker_get_map_async]
@@ -69,9 +74,19 @@ public class MapsMarkerActivity extends AppCompatActivity
         googleMap.addMarker(new MarkerOptions()
             .position(sydney)
             .title("Marker in Sydney"));
-        // [START_EXCLUDE silent]
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        // [END_EXCLUDE]
+
+        googleMap.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(@NonNull Marker marker) {
+        Toast.makeText(this,
+            "My Position: " + marker.getPosition() +
+                    "\nComment: " + marker.getTitle(),
+            Toast.LENGTH_LONG)
+                .show();
+        return false;
     }
     // [END maps_marker_on_map_ready_add_marker]
 }

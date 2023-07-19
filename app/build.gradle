@@ -5,6 +5,7 @@ plugins {
 
 android {
     compileSdkVersion 34
+    namespace "com.example.mapwithmarker"
     defaultConfig {
         applicationId "com.example.mapwithmarker"
         minSdkVersion 19

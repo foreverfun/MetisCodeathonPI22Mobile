@@ -27,6 +27,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 /**
  * An activity that displays a Google map with a marker (pin) to indicate a particular location.
@@ -34,9 +38,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 // [START maps_marker_on_map_ready]
 public class MapsMarkerActivity extends AppCompatActivity
         implements OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener{
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnMapClickListener {
 
     // [START_EXCLUDE]
+    GoogleMap googleMap;
+    private GoogleMap mMap;
+    private ArrayList<Marker> arrMarkerList;
+    private ArrayList<Polyline> arrPolylineList;
     // [START maps_marker_get_map_async]
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +75,49 @@ public class MapsMarkerActivity extends AppCompatActivity
     // [START maps_marker_on_map_ready_add_marker]
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
         // [START_EXCLUDE silent]
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
         // [END_EXCLUDE]
         LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions()
-            .position(sydney)
-            .title("Marker in Sydney"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(sydney)
+                .title("Marker Title")
+                .snippet("Marker Description");
+
+        Marker marker = googleMap.addMarker(markerOptions);
+
         googleMap.setOnMarkerClickListener(this);
+        googleMap.setOnMapClickListener(this);
     }
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+
         Toast.makeText(this,
             "My Position: " + marker.getPosition() +
                     "\nComment: " + marker.getTitle(),
             Toast.LENGTH_LONG)
                 .show();
         return false;
+    }
+
+    @Override
+    public void onMapClick(@NonNull LatLng latLng) {
+        Toast.makeText(this,
+                        "My Position: " + latLng,
+                        Toast.LENGTH_LONG)
+                .show();
+        MarkerOptions markerOptions = new MarkerOptions()
+                .position(latLng)
+                .title("Marker Title")
+                .snippet("Marker Description");
+
+        Marker marker = mMap.addMarker(markerOptions);
+        marker.showInfoWindow();
     }
     // [END maps_marker_on_map_ready_add_marker]
 }

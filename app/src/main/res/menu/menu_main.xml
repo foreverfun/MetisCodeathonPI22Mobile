@@ -4,9 +4,12 @@
         android:id="@+id/menu_marker_information"
         android:title="Marker Information" />
     <item
-        android:id="@+id/menu_search_zip_code"
-        android:title="Search by Zip Code" />
+        android:id="@+id/menu_search"
+        android:title="Search" />
     <item
-        android:id="@+id/menu_search_state"
-        android:title="Search by State" />
+        android:id="@+id/menu_marker"
+        android:title="Marker" />
+    <item
+        android:id="@+id/menu_drawing"
+        android:title="Drawing" />
 </menu>

@@ -74,10 +74,10 @@ public class MapsMarkerActivity extends AppCompatActivity
             mMap = googleMap;
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             LatLng usdaDC = new LatLng(38.8867712, -77.0325009);
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(usdaDC, 15f);
-            mMap.animateCamera(cameraUpdate);
+
 
             String address = convertLatLngToAddress(usdaDC);
+
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(usdaDC)
                     .title("US Department of Agriculture")
@@ -86,6 +86,9 @@ public class MapsMarkerActivity extends AppCompatActivity
             Marker marker = googleMap.addMarker(markerOptions);
             markerList.add(marker);
             marker.showInfoWindow();
+
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(usdaDC, 15f);
+            mMap.animateCamera(cameraUpdate);
 
             mMap.setOnMarkerClickListener(this);
             mMap.setOnMapLongClickListener(this);
